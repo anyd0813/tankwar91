@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameClient extends JComponent {
     private int screenWidth;
@@ -9,7 +11,8 @@ public class GameClient extends JComponent {
 
     //玩家坦克
     public Tank playerTank;
-
+    private List<Tank> enemyTanks=new ArrayList<Tank>();
+    private List<Wall> walls=new ArrayList<Wall>();
     public GameClient() {
         this(800, 600);
     }
@@ -35,12 +38,28 @@ public class GameClient extends JComponent {
     }
 
     public void init() {
-        playerTank = new Tank(400, 100, Direction.DOWN);
+
+        playerTank=new Tank(470,100,Direction.DOWN);
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                enemyTanks.add(new Tank(350+j*80,350+80*i,Direction.UP,true));
+            }
+        }
+        walls.add(new Wall(250,150,true,15));
+        walls.add(new Wall(150,200,false,15));
+        walls.add(new Wall(800,200,false,15));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
+
         playerTank.draw(g);
+        for(Tank tank:enemyTanks){
+            tank.draw(g);
+        }
+        for(Wall wall:walls){
+            wall.draw(g);
+        }
     }
 
     public void keyPressed(KeyEvent e) {

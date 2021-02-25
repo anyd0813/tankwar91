@@ -6,7 +6,7 @@ public class TankGame {
     public static void main(String[] args) {
 
         JFrame frame=new JFrame();
-        final GameClient gameClient=new GameClient(800,600);
+        final GameClient gameClient=new GameClient(1024,800);
         frame.add(gameClient);
         frame.setTitle("坦克大戰!");
         frame.setVisible(true);
