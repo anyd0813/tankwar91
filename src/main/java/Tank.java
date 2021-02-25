@@ -51,29 +51,10 @@ public class Tank extends GameObject {
         return dirs;
     }
 
-    public Image getImage(){
-       String name=enemy ?"etank" : "itank";
-        if(direction==Direction.UP)
-            return new ImageIcon("assets/images/"+name+"U.png").getImage();
-       if(direction==Direction.DOWN)
-           return new ImageIcon("assets/images/"+name+"D.png").getImage();
-       if(direction==Direction.LEFT)
-           return new ImageIcon("assets/images/"+name+"L.png").getImage();
-       if(direction==Direction.RIGHT)
-           return new ImageIcon("assets/images/"+name+"R.png").getImage();
-        if(direction==Direction.UP_RIGHT)
-            return new ImageIcon("assets/images/"+name+"RU.png").getImage();
-        if(direction==Direction.UP_LEFT)
-            return new ImageIcon("assets/images/"+name+"LU.png").getImage();
-        if(direction==Direction.DOWN_RIGHT)
-            return new ImageIcon("assets/images/"+name+"RD.png").getImage();
-        if(direction==Direction.DOWN_LEFT)
-            return new ImageIcon("assets/images/"+name+"LD.png").getImage();
 
-       return null;
-
-   }
    public void move(){
+       oldX=x;
+       oldY=y;
         switch (direction){
             case UP:
                 y-=speed;
@@ -105,6 +86,36 @@ public class Tank extends GameObject {
                 break;
 
         }
+      collision();
+   }
+   public void collision(){
+       if(x<0){
+           x=0;
+
+       }else if(x>TankGame.getGameClient().getScreenWidth()-width){
+           x=TankGame.gameClient.getScreenWidth()-width;
+       }
+       if(y<0){
+           y=0;
+
+       }else if(y>TankGame.gameClient.getScreenHeight()-height){
+           y=TankGame.gameClient.getScreenHeight()-height;
+       }
+       for(Wall wall:TankGame.gameClient.getWalls()){
+           if(getRectangle().intersects(wall.getRectangle())){
+              // System.out.println("hit");
+               x=oldX;
+               y=oldY;
+               return;
+           }
+       }
+       for(Tank tank:TankGame.getGameClient().getEnemyTanks()){
+           if(getRectangle().intersects(tank.getRectangle())){
+               x=oldX;
+               y=oldY;
+               return;
+           }
+       }
    }
    public void determineDirection(){
         if(dirs[0]&&dirs[2]&&!dirs[1]&&!dirs[3])direction=Direction.UP_LEFT;

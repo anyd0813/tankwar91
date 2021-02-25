@@ -19,6 +19,21 @@ public class GameClient extends JComponent {
         this(800, 600);
     }
 
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public List<Wall> getWalls() {
+        return walls;
+    }
+
+    public List<Tank> getEnemyTanks() {
+        return enemyTanks;
+    }
 
     public GameClient(int screenWidth, int screenHeight) {
         this.screenWidth = screenWidth;
@@ -51,27 +66,22 @@ public class GameClient extends JComponent {
         }
 
         playerTank=new Tank(470,100,Direction.DOWN,iTankImage);
+        objects.add(playerTank);
 
         for(int i=0;i<3;i++){
             for(int j=0;j<4;j++){
-                enemyTanks.add(new Tank(350+j*80,350+80*i,Direction.UP,true,eTankImage));
+                objects.add(new Tank(350+j*80,350+80*i,Direction.UP,true,eTankImage));
             }
         }
-        walls.add(new Wall(250,150,true,15,brickImage));
-        walls.add(new Wall(150,200,false,15,brickImage));
-        walls.add(new Wall(800,200,false,15,brickImage));
+        objects.add(new Wall(250,150,true,15,brickImage));
+        objects.add(new Wall(150,200,false,15,brickImage));
+        objects.add(new Wall(800,200,false,15,brickImage));
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
-
-        playerTank.draw(g);
-        for(Tank tank:enemyTanks){
-            tank.draw(g);
-        }
-        for(Wall wall:walls){
-            wall.draw(g);
-        }
+    public void paintComponent(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,getScreenWidth(),getScreenHeight());
         for(GameObject object:objects){
             object.draw(g);
         }

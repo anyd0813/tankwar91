@@ -3,7 +3,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class TankGame {
+    public static GameClient gameClient;
+
+    public static GameClient getGameClient() {
+        return gameClient;
+    }
+
     public static void main(String[] args) {
+
 
         JFrame frame=new JFrame();
         final GameClient gameClient=new GameClient(1024,800);

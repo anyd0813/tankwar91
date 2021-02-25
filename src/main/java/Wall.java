@@ -13,6 +13,10 @@ public class Wall extends GameObject {
         this.bricks = bricks;
 
     }
+    public Rectangle getRectangle(){
+        return  horizontal ? new Rectangle(x,y,bricks*width,height):
+                new Rectangle(x,y,width,bricks*height);
+    }
     public void draw(Graphics g){
         if(horizontal){
             for(int i=0;i<bricks;i++){
