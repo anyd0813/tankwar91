@@ -1,7 +1,8 @@
+import Object.GameObject;
 import javax.swing.*;
 import java.awt.*;
 
-public class Tank {
+public class Tank extends GameObject {
    private int x;
    private int y;
    private Direction direction;
@@ -9,11 +10,12 @@ public class Tank {
    private boolean[] dirs=new boolean[4];
    private boolean enemy;
 
-   public Tank(int x, int y, Direction direction) {
-       this(x,y,direction,false);
+   public Tank(int x, int y, Direction direction,Image[] image) {
+       this(x,y,direction,false,image);
     }
 
-    public Tank(int x, int y, Direction direction,boolean enemy) {
+    public Tank(int x, int y, Direction direction,boolean enemy,Image[] image) {
+        super(x,y,image);
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -121,7 +123,7 @@ public class Tank {
             determineDirection();
             move();
         }
-        g.drawImage(getImage(),x,y,null);
+        g.drawImage(image[direction.ordinal()],x,y,null);
    }
    public boolean isStop(){
         for(int i=0;i<dirs.length;i++){
